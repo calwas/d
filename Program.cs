@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using Serilog;
+using System.Linq;
+using NaturalSort.Extension;
 
 namespace d
 {
@@ -10,12 +11,6 @@ namespace d
     {
         static void Main(string[] args)
         {
-
-            // Init logging
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.Console()
-                .CreateLogger();
 
             // Init fileSpec search string
             var fileSpec = ".";
@@ -52,7 +47,6 @@ namespace d
                     wildcardSpec = fileSpec;
                 }
             }
-            // Log.Debug($"searchSpec: '{searchSpec}'");
 
             // Construct and output drive volume info
             var driveSpec = Path.GetPathRoot(searchSpec);
@@ -93,7 +87,8 @@ namespace d
                     // var searchConfig = new EnumerationOptions(); 
                     var directories = Directory.GetDirectories(searchSpec, wildcardSpec);
                     numDirs = directories.Length;
-                    foreach (var directory in directories)
+                    var directoriesOrdered = directories.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort());
+                    foreach (var directory in directoriesOrdered)
                     {
                         ProcessDirectory(directory);
                     }
@@ -104,7 +99,8 @@ namespace d
                 {
                     var files = Directory.GetFiles(searchSpec, wildcardSpec);
                     numFiles = files.Length;
-                    foreach (var file in files)
+                    var filesOrdered = files.OrderBy(x => x, StringComparison.OrdinalIgnoreCase.WithNaturalSort());
+                    foreach (var file in filesOrdered)
                     {
                         fileSize += ProcessFile(file);
                     }
