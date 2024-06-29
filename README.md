@@ -24,6 +24,8 @@ are necessary; just load the solution in Visual Studio and build it. Visual Stud
 the required sorting package automatically when the solution is opened.
 
 ## Sample output
+
+```
    $ d                                                   
     Volume in drive C is Windows                         
                                                          
@@ -43,4 +45,4 @@ the required sorting package automatically when the solution is opened.
    2020-Jul-03  05:51 PM                29  .gitignore   
                   7 File(s)          14,654 bytes        
                   5 Dir(s)   44,709,969,920 bytes free   
-                                                         
+```
